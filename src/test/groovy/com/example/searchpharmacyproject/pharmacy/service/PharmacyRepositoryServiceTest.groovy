@@ -5,10 +5,10 @@ import com.example.searchpharmacyproject.pharmacy.entity.Pharmacy
 import com.example.searchpharmacyproject.pharmacy.repository.PharmacyRepository
 import org.springframework.beans.factory.annotation.Autowired
 
-class PharmacyServiceTest extends AbstractIntegrationContainerBaseTest {
+class PharmacyRepositoryServiceTest extends AbstractIntegrationContainerBaseTest {
 
     @Autowired
-    private PharmacyService pharmacyService
+    private PharmacyRepositoryService pharmacyRepositoryService
 
     @Autowired
     private PharmacyRepository pharmacyRepository
@@ -31,7 +31,7 @@ class PharmacyServiceTest extends AbstractIntegrationContainerBaseTest {
 
         when:
         def entity = pharmacyRepository.save(pharmacy)
-        pharmacyService.updateAddress(entity.getId(), modifiedAddress)
+        pharmacyRepositoryService.updateAddress(entity.getId(), modifiedAddress)
 
         def result = pharmacyRepository.findAll()
 

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PharmacyService {
+public class PharmacyRepositoryService {
 
     private final PharmacyRepository pharmacyRepository;
 
