@@ -34,10 +34,9 @@ public class PharmacyRecommendationService {
         //사용자가 입력한 주소를 dto로 변환해서 가져옴
         DocumentDto documentDto = kakaoApiResponseDto.getDocumentList().get(0);
         //사용자 위치에서 가까운 약국을 리스트로 가져와서 DB에 저장
-        List<Direction> directionList = directionService.buildDirectionList(documentDto);
+        //List<Direction> directionList = directionService.buildDirectionList(documentDto);
+        List<Direction> directionList = directionService.buildDirectionListByCategoryApi(documentDto);
         directionService.saveAll(directionList);
-
-
 
     }
 
