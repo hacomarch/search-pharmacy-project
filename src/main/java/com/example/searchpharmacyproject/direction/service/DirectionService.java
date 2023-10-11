@@ -27,6 +27,7 @@ public class DirectionService {
     private static final int MAX_SEARCH_COUNT = 3; //약국 최대 검색 갯수
     private static final double RADIUS_KM = 10.0; // 반경 10 km
     private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
+    private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
@@ -40,9 +41,9 @@ public class DirectionService {
         return directionRepository.saveAll(directionList);
     }
 
+    //길찾기 링크를 반환하는 메소드
     public String findDirectionUrlById(String encodedId) {
-        Long decodedId = base62Service.decodeDirectionId(encodedId);
-        Direction direction = directionRepository.findById(decodedId).orElse(null);
+        Direction direction = findDirectionByEncodedId(encodedId);
 
         String params = String.join(",",
                 direction.getTargetPharmacyName(),
@@ -52,6 +53,25 @@ public class DirectionService {
         String result = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL + params).toUriString();
 
         return result;
+    }
+
+    //로드뷰 링크를 반환하는 메소드
+    public String findRoadViewUrlById(String encodedId) {
+        Direction direction = findDirectionByEncodedId(encodedId);
+
+        String params = String.join(",",
+                String.valueOf(direction.getTargetLatitude()),
+                String.valueOf(direction.getTargetLongitude()));
+
+        String result = UriComponentsBuilder.fromHttpUrl(ROAD_VIEW_BASE_URL + params).toUriString();
+
+        return result;
+    }
+
+    //인코딩 된 id를 인자로 받아 direction을 찾아 반환하는 메소드
+    private Direction findDirectionByEncodedId(String encodedId) {
+        Long decodedId = base62Service.decodeDirectionId(encodedId); //인코딩된 id(String)를 디코딩해서 long 형식으로 가져오기
+        return directionRepository.findById(decodedId).orElse(null);
     }
 
     //사용자가 입력한 주소를 기반으로 10km 이내의 약국 3개를 뽑아 리스트로 반환

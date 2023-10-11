@@ -15,10 +15,19 @@ public class DirectionController {
     private final DirectionService directionService;
 
     @GetMapping("/dir/{encodedId}")
-    public String searchDirection(@PathVariable("encodedId") String encodedId) {
+    public String searchDirectionWithBaseUrl(@PathVariable("encodedId") String encodedId) {
         String result = directionService.findDirectionUrlById(encodedId);
 
-        log.info("[DirectionController.searchDirection] direction url: {}", result);
+        log.info("[DirectionController.searchDirectionWithBaseUrl] direction url: {}", result);
+
+        return "redirect:" + result;
+    }
+
+    @GetMapping("/roadView/{encodedId}")
+    public String searchDirectionWithRoadViewUrl(@PathVariable("encodedId") String encodedId) {
+        String result = directionService.findRoadViewUrlById(encodedId);
+
+        log.info("[DirectionController.searchDirectionWithRoadViewUrl] direction url: {}", result);
 
         return "redirect:" + result;
     }

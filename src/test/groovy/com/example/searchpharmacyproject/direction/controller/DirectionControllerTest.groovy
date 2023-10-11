@@ -35,4 +35,21 @@ class DirectionControllerTest extends Specification {
                 .andExpect(redirectedUrl(redirectUrl))
                 .andDo(print())
     }
+
+    def "GET /roadView/{encodedId}"() {
+        given:
+        String encodedId = "r"
+
+        String redirectUrl = "https://map.kakao.com/link/map/pharmacy,38.11,128.11"
+
+        when:
+        directionService.findRoadViewUrlById(encodedId) >> redirectUrl
+        def result = mockMvc.perform(get("/roadView/{encodedId}", encodedId))
+
+        then:
+        result
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(redirectUrl))
+                .andDo(print())
+    }
 }

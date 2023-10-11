@@ -40,6 +40,8 @@ pharmacy:
   recommendation:
     base:
       url: http://localhost:8080/dir/
+    roadView:
+      url: http://localhost:8080/roadView/
 ---
 spring:
   config:

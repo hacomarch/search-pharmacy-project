@@ -27,10 +27,10 @@ public class PharmacyRecommendationService {
     private final DirectionService directionService;
     private final Base62Service base62Service;
 
-    private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
-
     @Value("${pharmacy.recommendation.base.url}")
     private String baseUrl;
+    @Value("${pharmacy.recommendation.roadView.url}")
+    private String roadViewUrl;
 
     public List<OutputDto> recommendPharmacyList(String address) {
         KakaoApiResponseDto kakaoApiResponseDto = kakaoAddressSearchService.requestAddressSearch(address);
@@ -59,7 +59,7 @@ public class PharmacyRecommendationService {
                 .pharmacyName(direction.getTargetPharmacyName())
                 .pharmacyAddress(direction.getTargetAddress())
                 .directionUrl(baseUrl + base62Service.encodeDirectionId(direction.getId())) // -> localhost:8080/dir/23Ferf로 저장
-                .roadViewUrl(ROAD_VIEW_BASE_URL + direction.getTargetLatitude() + "," + direction.getTargetLongitude())
+                .roadViewUrl(roadViewUrl + base62Service.encodeDirectionId(direction.getId()))
                 .distance(String.format("%.2f km", direction.getDistance()))
                 .build();
     }
