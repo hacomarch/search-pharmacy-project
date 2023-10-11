@@ -40,7 +40,7 @@ class DirectionControllerTest extends Specification {
         given:
         String encodedId = "r"
 
-        String redirectUrl = "https://map.kakao.com/link/map/pharmacy,38.11,128.11"
+        String redirectUrl = "https://map.kakao.com/link/roadview/38.11,128.11"
 
         when:
         directionService.findRoadViewUrlById(encodedId) >> redirectUrl
