@@ -78,3 +78,4 @@
 
 ## 배포
 (추후 예정)
+- reference : https://wonyong-jang.github.io/aws/2022/06/05/AWS-EC2-Elastic-IP.html
