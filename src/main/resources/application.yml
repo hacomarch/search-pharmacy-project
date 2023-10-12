@@ -61,6 +61,7 @@ spring:
     hibernate:
       ddl-auto: validate # prod 배포시 validate
     show-sql: true
+    open-in-view: false
 
 pharmacy:
   recommendation:
